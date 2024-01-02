@@ -1,7 +1,8 @@
 import express from "express";
+import { envs } from "./libs/envs.js";
+import ConnectToDatabase from "./v1/config/db/init.js";
 
 // ! Imports Routes
-import { envs } from "./libs/envs.js";
 import { AppRoutesV1 } from "./v1/routes/index.js";
 
 const app = express();
@@ -18,4 +19,7 @@ app.use('/api/v1', AppRoutesV1.routes)
 // ! listen port
 app.listen(envs.PORT, () => {
     console.log("server on port", envs.PORT);
+
 });
+
+ConnectToDatabase()
