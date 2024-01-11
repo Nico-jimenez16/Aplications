@@ -1,18 +1,42 @@
-// Definición de un esquema usando Mongoose
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+
 const Schema = mongoose.Schema;
 
-const usuarioSchema = new Schema({
-  nombre: String,
-  edad: Number,
-  correo: String,
-});
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      unique: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    roles: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Role",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+);
 
-// Creación de un modelo basado en el esquema
-const Usuario = mongoose.model('Usuario', usuarioSchema);
+userSchema.statics.encryptPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+};
 
-// Ejemplo de cómo utilizar el modelo para crear un nuevo usuario
-const nuevoUsuario = new Usuario({
-  nombre: 'Ejemplo',
-  edad: 30,
-  correo: 'ejemplo@correo.com',
-});
+userSchema.statics.comparePassword = async (password, receivedPassword) => {
+  return await bcrypt.compare(password, receivedPassword)
+}
+
+export default mongoose.model('User', userSchema);

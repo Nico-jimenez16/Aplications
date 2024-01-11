@@ -1,6 +1,6 @@
 import express from "express";
 import { envs } from "./libs/envs.js";
-import ConnectToDatabase from "./v1/config/db/init.js";
+import { ConnectToDatabase } from "./v1/config/db/init.js";
 
 // ! Imports Routes
 import { AppRoutesV1 } from "./v1/routes/index.js";
