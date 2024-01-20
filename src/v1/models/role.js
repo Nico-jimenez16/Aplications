@@ -1,14 +1,17 @@
 import mongoose from "mongoose";
+import {PERMISSIONS} from "./types.js";
 
-export const ROLES = ["user", "admin", "moderator"];
-
-const roleSchema = new mongoose.Schema(
-  {
-    name: String,
+const roleSchema = new mongoose.Schema({
+  name: {
+    required: true,
+    type: String,
   },
-  {
-    versionKey: false,
-  }
-);
+  description: String,
+  permissions: {
+    required: true,
+    type: [String],
+    enum: PERMISSIONS,
+  },
+});
 
 export default mongoose.model("Role", roleSchema);

@@ -1,0 +1,9 @@
+export const USER_PERMISSIONS = [
+  "CREATED_USER",
+  "UPDATE_USER",
+  "DELETE_USER",
+  "LIST_USER",
+];
+
+
+export const PERMISSIONS = [...USER_PERMISSIONS]

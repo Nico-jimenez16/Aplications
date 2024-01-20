@@ -15,11 +15,11 @@ app.use(express.json());   // when we send information in format json
 // ! Routes
 app.use('/api/v1', AppRoutesV1.routes)
 
+// ! Connect to database 
+ConnectToDatabase()
 
 // ! listen port
 app.listen(envs.PORT, () => {
     console.log("server on port", envs.PORT);
 
 });
-
-ConnectToDatabase()
